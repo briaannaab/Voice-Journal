@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
   cancel: { marginTop: 32 },
   cancelText: { color: '#555', fontSize: 16 },
   processingText: { color: '#888', marginTop: 16, fontSize: 16 }
-});
+})

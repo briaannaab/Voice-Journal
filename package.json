@@ -5,6 +5,7 @@
     "axios": "^1.13.6",
     "expo": "^55.0.5",
     "expo-av": "^16.0.8",
+    "expo-router": "~55.0.4",
     "zustand": "^5.0.11"
   },
   "devDependencies": {
