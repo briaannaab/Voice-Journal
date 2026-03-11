@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'rea
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { useRecorder } from '../src/hooks/useRecorder';
-
 export default function RecordScreen() {
   const router = useRouter();
   const { isRecording, duration, startRecording, stopRecording } = useRecorder();
