@@ -4,9 +4,9 @@ import { Audio } from 'expo-av';
 export function useRecorder() {
   const [isRecording, setIsRecording] = useState(false);
   const [duration, setDuration] = useState(0);
-  const [audioUri, setAudioUri] = useState(null);
-  const recordingRef = useRef(null);
-  const timerRef = useRef(null);
+  const [audioUri, setAudioUri] = useState<string | null>(null);
+  const recordingRef = useRef<Audio.Recording | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startRecording = async () => {
     await Audio.requestPermissionsAsync();
@@ -26,11 +26,11 @@ export function useRecorder() {
   };
 
   const stopRecording = async () => {
-    clearInterval(timerRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
     setIsRecording(false);
 
-    await recordingRef.current.stopAndUnloadAsync();
-    const uri = recordingRef.current.getURI();
+    await recordingRef.current?.stopAndUnloadAsync();
+    const uri = recordingRef.current?.getURI() ?? null;
     setAudioUri(uri);
     return uri;
   };

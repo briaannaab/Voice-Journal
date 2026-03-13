@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import { useRecorder } from '../src/hooks/useRecorder';
+import { useRecorder } from ./src/hooks/useRecorder';
 export default function RecordScreen() {
   const router = useRouter();
   const { isRecording, duration, startRecording, stopRecording } = useRecorder();
@@ -10,8 +10,16 @@ export default function RecordScreen() {
   const handleStop = async () => {
     setProcessing(true);
     const uri = await stopRecording();
-    // TODO: send to backend
-    console.log('Audio saved at:', uri);
+    if (!uri) return;
+
+    const formData = new FormData();
+    formData.append('file', { uri, name: 'entry.m4a', type: 'audio/m4a' } as any);
+
+    const response = await api.post('/transcribe', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+
+    console.log('Transcript:', response.data.transcript);
     setProcessing(false);
     router.back();
   };
